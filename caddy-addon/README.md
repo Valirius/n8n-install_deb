@@ -2,7 +2,7 @@
 
 This directory allows you to extend or override Caddy configuration without modifying the main `Caddyfile`.
 
-All `.conf` files in this directory are automatically imported via `import /etc/caddy/addons/*.conf` at the end of the main Caddyfile.
+Files matching `site-*.conf` in this directory are automatically imported via `import /etc/caddy/addons/site-*.conf` in the main Caddyfile.
 
 ## Use Cases
 
@@ -70,7 +70,7 @@ caddy-addon/
 ├── README.md                   # This file
 ├── tls-snippet.conf.example    # Template for TLS snippet (tracked in git)
 ├── tls-snippet.conf            # Your TLS config (gitignored, auto-created)
-└── *.conf                      # Your custom addons (gitignored)
+└── site-*.conf                 # Your custom addons (gitignored, must start with "site-")
 
 certs/
 ├── .gitkeep                    # Keeps directory in git
@@ -80,9 +80,11 @@ certs/
 
 ## Adding Custom Addons
 
-You can create additional `.conf` files for custom Caddy configurations. They will be automatically loaded after the main Caddyfile.
+You can create `site-*.conf` files for custom Caddy configurations. They will be automatically loaded by the main Caddyfile.
 
-Example: `caddy-addon/custom-headers.conf`
+**Important:** Custom addon files MUST start with `site-` prefix to be loaded (e.g., `site-custom.conf`, `site-myapp.conf`).
+
+Example: `caddy-addon/site-custom-headers.conf`
 ```caddy
 # Add custom headers to all responses
 (custom_headers) {
@@ -94,7 +96,7 @@ Example: `caddy-addon/custom-headers.conf`
 
 - `tls-snippet.conf.example` is tracked in git (template with default Let's Encrypt behavior)
 - `tls-snippet.conf` is gitignored and auto-created from template (preserved during updates)
-- Other `*.conf` files are also gitignored (preserved during updates)
+- `site-*.conf` files are gitignored (preserved during updates)
 - Files in `certs/` are gitignored (certificates are not committed)
 - Caddy validates configuration on startup - check logs if it fails:
   ```bash

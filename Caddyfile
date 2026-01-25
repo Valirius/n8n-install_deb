@@ -207,7 +207,8 @@ http://{$WELCOME_HOSTNAME} {
     try_files {path} /index.html
 }
 
-import /etc/caddy/addons/*.conf
+# Import custom site addons
+import /etc/caddy/addons/site-*.conf
 
 # SearXNG
 {$SEARXNG_HOSTNAME} {
