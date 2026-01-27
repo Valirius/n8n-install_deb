@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [1.2.2] - 2026-01-24
+## [1.2.2] - 2026-01-26
 
 ### Fixed
 - **Custom TLS** - Fix duplicate hostname error when using custom certificates. Changed architecture from generating separate site blocks to using a shared TLS snippet that all services import.
