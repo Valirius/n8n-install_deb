@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.2.3] - 2026-01-29
+
+### Fixed
+- **Gost proxy** - Add Telegram domains to `GOST_NO_PROXY` bypass list for n8n Telegram triggers
+
 ## [1.2.2] - 2026-01-26
 
 ### Fixed
