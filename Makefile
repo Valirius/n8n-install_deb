@@ -2,6 +2,16 @@
 
 PROJECT_NAME := localai
 
+# Include n8n-workers compose if it exists (generated during install)
+COMPOSE_FILES := -f docker-compose.yml
+ifneq ($(wildcard docker-compose.n8n-workers.yml),)
+COMPOSE_FILES += -f docker-compose.n8n-workers.yml
+endif
+# Include n8n-import override when profile is active (adds depends_on so n8n waits for import)
+ifneq ($(shell grep -E '^COMPOSE_PROFILES=' .env 2>/dev/null | cut -d= -f2- | tr ',' '\n' | grep -x 'n8n-import' | head -1),)
+COMPOSE_FILES += -f docker-compose.n8n-import.yml
+endif
+
 help:
 	@echo "n8n-install - Available commands:"
 	@echo ""
@@ -21,8 +31,9 @@ help:
 	@echo "  make start             Start all services"
 	@echo "  make show-restarts     Show restart count per container"
 	@echo "  make doctor            Run system diagnostics"
-	@echo "  make import            Import n8n workflows from backup"
+	@echo "  make import            Import n8n workflows from backup (one-shot)"
 	@echo "  make import n=10       Import first N workflows only"
+	@echo "  (n8n-import profile: add to COMPOSE_PROFILES for import at startup)"
 	@echo "  make setup-tls         Configure custom TLS certificates"
 	@echo ""
 	@echo "  make switch-beta       Switch to beta (develop branch)"
@@ -51,13 +62,13 @@ clean-all:
 
 logs:
 ifdef s
-	docker compose -p $(PROJECT_NAME) logs -f --tail=200 $(s)
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) logs -f --tail=200 $(s)
 else
-	docker compose -p $(PROJECT_NAME) logs -f --tail=100
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) logs -f --tail=100
 endif
 
 status:
-	docker compose -p $(PROJECT_NAME) ps
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) ps
 
 monitor:
 	docker stats
@@ -66,10 +77,10 @@ restart:
 	bash ./scripts/restart.sh
 
 stop:
-	docker compose -p $(PROJECT_NAME) stop
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) stop
 
 start:
-	docker compose -p $(PROJECT_NAME) start
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) start
 
 show-restarts:
 	@docker ps -q | while read id; do \
@@ -93,9 +104,9 @@ switch-stable:
 
 import:
 ifdef n
-	docker compose -p $(PROJECT_NAME) run --rm -e FORCE_IMPORT=true -e IMPORT_LIMIT=$(n) n8n-import
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) run --rm -e FORCE_IMPORT=true -e IMPORT_LIMIT=$(n) n8n-import
 else
-	docker compose -p $(PROJECT_NAME) run --rm -e FORCE_IMPORT=true n8n-import
+	docker compose -p $(PROJECT_NAME) $(COMPOSE_FILES) run --rm -e FORCE_IMPORT=true n8n-import
 endif
 
 setup-tls:

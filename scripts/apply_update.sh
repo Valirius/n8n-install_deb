@@ -70,6 +70,11 @@ bash "$SCRIPT_DIR/05_configure_services.sh" || {
 }
 log_success "Service configuration completed."
 
+
+# Docker Cleanup перед обновлением образов
+log_info "Очистка старых Docker-образов перед обновлением..."
+docker system prune -a -f 2>/dev/null && log_success "Docker очищен" || log_warning "Очистка пропущена"
+
 # Clean up legacy containers from old naming conventions
 cleanup_legacy_n8n_workers
 cleanup_legacy_postgresus

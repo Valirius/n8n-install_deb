@@ -180,7 +180,7 @@ services:
   n8n-import:
     <<: *service-n8n
     container_name: n8n-import
-    profiles: ["n8n"]
+    profiles: ["n8n-import"]
     environment:
       <<: *service-n8n-env
       RUN_N8N_IMPORT: ${RUN_N8N_IMPORT:-false}
@@ -204,13 +204,16 @@ services:
       - ./shared:/data/shared
     healthcheck:
       test: ["CMD-SHELL", "http_proxy= https_proxy= HTTP_PROXY= HTTPS_PROXY= wget -qO- http://localhost:5678/healthz || exit 1"]
-      interval: 30s
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 30s
+      retries: 12
+      start_period: 90s
     depends_on:
-      n8n-import:
-        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      # n8n-import added by docker-compose.n8n-import.yml when n8n-import profile is active
 
   # Template services for worker-runner pairs (used by docker-compose.n8n-workers.yml via extends)
   # These templates use profile "n8n-template" which is never activated directly
@@ -566,7 +569,7 @@ services:
       SEARXNG_BASE_URL: https://${SEARXNG_HOSTNAME:-localhost}/
       UWSGI_WORKERS: ${SEARXNG_UWSGI_WORKERS:-4}
       UWSGI_THREADS: ${SEARXNG_UWSGI_THREADS:-4}
-    # cap_drop: - ALL  # Temporarily commented out for first run
+    # # # # # # cap_drop: - ALL  # Temporarily commented out for first run  # Temporarily commented out for first run  # Temporarily commented out for first run  # Temporarily commented out for first run  # Temporarily commented out for first run  # Temporarily commented out for first run
     cap_add:
       - CHOWN
       - SETGID

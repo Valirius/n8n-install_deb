@@ -52,7 +52,7 @@ base_services_data=(
     "libretranslate" "LibreTranslate (Self-hosted translation API - 50+ languages)"
     "lightrag" "LightRAG (Graph-based RAG with knowledge graphs)"
     "monitoring" "Monitoring Suite (Prometheus, Grafana, cAdvisor, Node-Exporter)"
-    "n8n" "n8n, n8n-worker, n8n-import (Workflow Automation)"
+    "n8n" "n8n, n8n-worker (Workflow Automation; n8n-import is separate profile)"
     "neo4j" "Neo4j (Graph Database)"
     "nocodb" "NocoDB (Open Source Airtable Alternative - Spreadsheet Database)"
     "ollama" "Ollama (Local LLM Runner - select hardware in next step)"

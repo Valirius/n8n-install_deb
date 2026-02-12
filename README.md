@@ -271,6 +271,21 @@ To update all components (n8n, Open WebUI, etc.) to their latest versions and in
 ```bash
 make update
 ```
+ЛУЧШЕ ВОТ ЭТО ИСПОЛЬЗОВАТЬ:
+```
+# 1. Сделать форк на GitHub
+# 2. Переключить remote на свой форк
+cd n8n-install
+git remote rename origin upstream
+git remote add origin https://github.com/ТВОЙ_ЮЗЕР/n8n-install.git
+git push -u origin main
+
+# Когда хочешь подтянуть обновления от автора:
+git fetch upstream
+git merge upstream/main
+# Разрешить конфликты если есть
+git push origin main
+```
 
 **For forks**: If you maintain a fork with custom changes and want to merge updates from upstream instead of resetting:
 
@@ -324,6 +339,15 @@ The project includes a Makefile for simplified command execution:
 | `make show-restarts`    | Show restart count per container                         |
 | `make import`           | Import n8n workflows from backup                         |
 | `make import n=10`      | Import first N workflows only                            |
+
+### make start vs start_services.py
+
+- **`make start`** — Simply runs `docker compose start` to bring back **already existing** containers that were stopped. Use this when your system is fully installed and you just need to start stopped containers.
+- **`start_services.py`** — Full initialization: clones Supabase/Dify repos (if needed), prepares `.env` files, builds images, creates and starts all containers. This is used during the first installation (via `scripts/install.sh`) and when the stack needs to be re-initialized.
+
+**When to use which:**
+- First installation or installation failed during service startup → `sudo python3 start_services.py`
+- System already installed, containers exist but are stopped → `make start`
 
 ### Diagnostics & Configuration
 

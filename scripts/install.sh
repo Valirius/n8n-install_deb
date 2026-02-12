@@ -122,6 +122,14 @@ show_step 2 8 "Installing Docker"
 set_telemetry_stage "docker_install"
 bash "$SCRIPT_DIR/02_install_docker.sh" || { log_error "Docker Installation failed"; exit 1; }
 log_success "Docker installation complete!"
+# Docker Cleanup: удаление старых образов и контейнеров
+log_info "Очистка старых Docker-образов и контейнеров..."
+if command -v docker &>/dev/null; then
+  docker system prune -a -f && log_success "Docker очищен (volumes сохранены)" || log_warning "Очистка Docker пропущена"
+else
+  log_info "Docker ещё не установлен, пропуск очистки"
+fi
+
 
 show_step 3 8 "Generating Secrets and Configuration"
 set_telemetry_stage "secrets_gen"

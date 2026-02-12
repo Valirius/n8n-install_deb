@@ -1,0 +1,13 @@
+# Override: adds n8n dependency on n8n-import when n8n-import profile is active.
+# Include with: -f docker-compose.n8n-import.yml (only when n8n-import is in COMPOSE_PROFILES)
+# Use case: RUN_N8N_IMPORT=true at install, or manual: make start-with-import
+
+services:
+  n8n:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      n8n-import:
+        condition: service_completed_successfully

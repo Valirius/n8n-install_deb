@@ -363,6 +363,9 @@ build_compose_files_array() {
     if path=$(get_n8n_workers_compose); then
         COMPOSE_FILES+=("-f" "$path")
     fi
+    if is_profile_active "n8n-import"; then
+        COMPOSE_FILES+=("-f" "$PROJECT_ROOT/docker-compose.n8n-import.yml")
+    fi
     if path=$(get_supabase_compose); then
         COMPOSE_FILES+=("-f" "$path")
     fi

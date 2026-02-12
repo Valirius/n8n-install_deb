@@ -71,6 +71,9 @@ MAIN_COMPOSE_FILES=("-f" "$PROJECT_ROOT/docker-compose.yml")
 if path=$(get_n8n_workers_compose); then
     MAIN_COMPOSE_FILES+=("-f" "$path")
 fi
+if is_profile_active "n8n-import"; then
+    MAIN_COMPOSE_FILES+=("-f" "$PROJECT_ROOT/docker-compose.n8n-import.yml")
+fi
 
 # Start main services
 log_info "Starting main services..."

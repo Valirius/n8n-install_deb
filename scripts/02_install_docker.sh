@@ -2,6 +2,7 @@
 # =============================================================================
 # 02_install_docker.sh - Docker and Docker Compose installation
 # =============================================================================
+# DEBIAN-совместимая версия (разные URL для ubuntu и debian)
 # Installs Docker Engine and Docker Compose plugin from the official repository:
 #   - Skips installation if Docker is already present
 #   - Adds Docker's official GPG key and APT repository
@@ -9,7 +10,7 @@
 #   - Adds the invoking user to the 'docker' group
 #   - Includes retry logic for apt commands (handles lock contention)
 #
-# Required: Must be run as root (sudo) on Ubuntu
+# Required: Must be run as root (sudo) on Ubuntu or Debian
 # =============================================================================
 
 set -e
@@ -21,6 +22,18 @@ source "$(dirname "$0")/utils.sh"
 # 1. Preparing the environment
 export DEBIAN_FRONTEND=noninteractive
 APT_OPTIONS="-o Dpkg::Options::=--force-confold -o Dpkg::Options::=--force-confdef -y"
+
+# Detect distro for Docker repo (ubuntu vs debian)
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  case "$ID" in
+    ubuntu) DOCKER_DISTRO="ubuntu" ;;
+    debian) DOCKER_DISTRO="debian" ;;
+    *)      DOCKER_DISTRO="debian" ;;  # fallback
+  esac
+else
+  DOCKER_DISTRO="debian"
+fi
 
 # Configuration for apt retry logic
 APT_RETRY_COUNT=10
@@ -101,17 +114,17 @@ run_apt_with_retry install -qq $APT_OPTIONS \
   gnupg \
   lsb-release || { log_error "Failed to install dependencies."; exit 1; }
 
-# 3. Adding Docker's GPG key
+# 3. Adding Docker's GPG key (разный URL для ubuntu/debian)
 log_subheader "Docker Repository"
-log_info "Adding Docker's GPG key..."
+log_info "Adding Docker's GPG key for $DOCKER_DISTRO..."
 install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL "https://download.docker.com/linux/$DOCKER_DISTRO/gpg" | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg
 
 # 4. Adding the Docker repository
 log_info "Adding the official Docker APT repository..."
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/$DOCKER_DISTRO \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   tee /etc/apt/sources.list.d/docker.list > /dev/null
 
@@ -139,4 +152,4 @@ log_info "Verifying Docker installation..."
 docker --version
 docker compose version
 
-exit 0 
+exit 0

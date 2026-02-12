@@ -60,6 +60,27 @@ fi
 # Persist RUN_N8N_IMPORT to .env
 write_env_var "RUN_N8N_IMPORT" "$final_run_n8n_import_decision"
 
+# Add or remove n8n-import from COMPOSE_PROFILES so it only runs when requested
+COMPOSE_PROFILES_VALUE="$(read_env_var COMPOSE_PROFILES)"
+if [[ "$final_run_n8n_import_decision" = "true" ]]; then
+    if [[ ",${COMPOSE_PROFILES_VALUE}," != *",n8n-import,"* ]]; then
+        COMPOSE_PROFILES_VALUE="${COMPOSE_PROFILES_VALUE:+$COMPOSE_PROFILES_VALUE,}n8n-import"
+        write_env_var "COMPOSE_PROFILES" "$COMPOSE_PROFILES_VALUE"
+        log_info "Added n8n-import to COMPOSE_PROFILES (workflows will import at startup)."
+    fi
+else
+    if [[ ",${COMPOSE_PROFILES_VALUE}," == *",n8n-import,"* ]]; then
+        IFS=',' read -r -a profiles_array <<< "$COMPOSE_PROFILES_VALUE"
+        new_profiles=()
+        for p in "${profiles_array[@]}"; do
+            [[ "$p" != "n8n-import" ]] && new_profiles+=("$p")
+        done
+        COMPOSE_PROFILES_VALUE=$(IFS=','; echo "${new_profiles[*]}")
+        write_env_var "COMPOSE_PROFILES" "$COMPOSE_PROFILES_VALUE"
+        log_info "Removed n8n-import from COMPOSE_PROFILES (no import at startup)."
+    fi
+fi
+
 
 # ----------------------------------------------------------------
 # Prompt for number of n8n workers

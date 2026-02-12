@@ -53,8 +53,20 @@ def clone_supabase_repo():
     if not is_supabase_enabled():
         print("Supabase is not enabled, skipping clone.")
         return
-    if not os.path.exists("supabase"):
-        print("Cloning the Supabase repository...")
+    compose_path = os.path.join("supabase", "docker", "docker-compose.yml")
+    needs_clone = not os.path.exists("supabase") or not os.path.exists(compose_path)
+    env_backup = None
+    env_path = os.path.join("supabase", "docker", ".env")
+    if needs_clone:
+        if os.path.exists("supabase"):
+            # Backup existing .env to temp (outside supabase) before removing
+            if os.path.exists(env_path):
+                env_backup = os.path.join(os.getcwd(), ".supabase-env-backup")
+                shutil.copy2(env_path, env_backup)
+            print("Supabase directory incomplete (missing docker-compose.yml), re-cloning...")
+            shutil.rmtree("supabase")
+        else:
+            print("Cloning the Supabase repository...")
         run_command([
             "git", "clone", "--filter=blob:none", "--no-checkout",
             "https://github.com/supabase/supabase.git"
@@ -64,11 +76,28 @@ def clone_supabase_repo():
         run_command(["git", "sparse-checkout", "set", "docker"])
         run_command(["git", "checkout", "master"])
         os.chdir("..")
+        # Restore .env if we backed it up
+        if env_backup and os.path.exists(env_backup):
+            shutil.copy2(env_backup, env_path)
+            os.remove(env_backup)
+            print("Restored supabase docker/.env from backup.")
     else:
-        print("Supabase repository already exists, updating...")
-        os.chdir("supabase")
-        run_command(["git", "pull"])
-        os.chdir("..")
+        # Only update if supabase has its own .git (is a separate clone).
+        if os.path.exists(os.path.join("supabase", ".git")):
+            print("Supabase repository already exists, updating...")
+            os.chdir("supabase")
+            try:
+                run_command(["git", "stash", "push", "-m", "start_services: temp before pull"])
+            except subprocess.CalledProcessError:
+                pass
+            run_command(["git", "pull"])
+            try:
+                run_command(["git", "stash", "pop"])
+            except subprocess.CalledProcessError:
+                pass
+            os.chdir("..")
+        else:
+            print("Supabase directory exists and has docker-compose.yml, skipping git pull.")
 
 def prepare_supabase_env():
     """Copy .env to .env in supabase/docker."""
@@ -102,10 +131,21 @@ def clone_dify_repo():
         run_command(["git", "checkout", "main"])
         os.chdir("..")
     else:
-        print("Dify repository already exists, updating...")
-        os.chdir("dify")
-        run_command(["git", "pull"])
-        os.chdir("..")
+        if os.path.exists(os.path.join("dify", ".git")):
+            print("Dify repository already exists, updating...")
+            os.chdir("dify")
+            try:
+                run_command(["git", "stash", "push", "-m", "start_services: temp before pull"])
+            except subprocess.CalledProcessError:
+                pass
+            run_command(["git", "pull"])
+            try:
+                run_command(["git", "stash", "pop"])
+            except subprocess.CalledProcessError:
+                pass
+            os.chdir("..")
+        else:
+            print("Dify directory exists (part of parent repo), skipping git pull.")
 
 def prepare_dify_env():
     """Create dify/docker/.env from env.example and inject selected values from root .env.
@@ -195,6 +235,12 @@ def stop_existing_containers():
     if os.path.exists(n8n_workers_compose_path):
         cmd.extend(["-f", n8n_workers_compose_path])
 
+    # Include n8n-import override when profile is active
+    env_values = dotenv_values(".env")
+    compose_profiles = env_values.get("COMPOSE_PROFILES", "")
+    if "n8n-import" in [p.strip() for p in compose_profiles.split(",") if p.strip()]:
+        cmd.extend(["-f", "docker-compose.n8n-import.yml"])
+
     cmd.extend(["down"])
     run_command(cmd)
 
@@ -229,6 +275,12 @@ def start_local_ai():
     n8n_workers_compose_path = "docker-compose.n8n-workers.yml"
     if os.path.exists(n8n_workers_compose_path):
         compose_files.extend(["-f", n8n_workers_compose_path])
+
+    # Include n8n-import override when profile is active (adds depends_on so n8n waits for import)
+    env_values = dotenv_values(".env")
+    compose_profiles = env_values.get("COMPOSE_PROFILES", "")
+    if "n8n-import" in [p.strip() for p in compose_profiles.split(",") if p.strip()]:
+        compose_files.extend(["-f", "docker-compose.n8n-import.yml"])
 
     # Explicitly build services and pull newer base images first.
     print("Checking for newer base images and building services...")

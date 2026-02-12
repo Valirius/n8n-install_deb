@@ -2,7 +2,8 @@
 # =============================================================================
 # 01_system_preparation.sh - System preparation and security hardening
 # =============================================================================
-# Prepares an Ubuntu/Debian system for running Docker services:
+# DEBIAN-совместимая версия (universe - только для Ubuntu)
+# Prepares a Debian/Ubuntu system for running Docker services:
 #   - Updates system packages and installs essential CLI tools
 #   - Configures UFW firewall (allows SSH, HTTP, HTTPS; denies other incoming)
 #   - Enables Fail2Ban for SSH brute-force protection
@@ -27,9 +28,20 @@ export DEBIAN_FRONTEND=noninteractive
 log_subheader "System Update"
 log_info "Updating package list..."
 apt update -y
-log_info "Enabling universe repository..."
-apt install -y software-properties-common
-add-apt-repository universe -y
+
+# universe - только Ubuntu; на Debian этой компоненты нет
+if grep -q "^ID=ubuntu" /etc/os-release 2>/dev/null; then
+  log_info "Enabling universe repository (Ubuntu)..."
+  apt install -y software-properties-common
+  add-apt-repository universe -y
+  apt update -y
+elif grep -q "^ID=debian" /etc/os-release 2>/dev/null; then
+  log_info "Debian detected, skipping universe (Debian uses main/contrib/non-free)..."
+  apt install -y software-properties-common 2>/dev/null || true
+else
+  log_info "Unknown distro, skipping universe repository..."
+fi
+
 log_info "Upgrading the system..."
 apt upgrade -y
 
@@ -92,4 +104,4 @@ else
   log_info "vm.max_map_count already configured (current: $CURRENT_VALUE)"
 fi
 
-exit 0 
+exit 0
