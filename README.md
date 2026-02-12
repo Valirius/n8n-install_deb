@@ -134,9 +134,9 @@ Get started quickly with a vast library of pre-built automations (optional impor
 
 ### Prerequisites before Installation
 
-1.  **Domain Name:** You need a registered domain name (e.g., `yourdomain.com`).
-2.  **DNS Configuration:** Before running the installation script, you **must** configure DNS A-record for your domain, pointing to the public IP address of the server where you'll install this system. Replace `yourdomain.com` with your actual domain:
-    - **Wildcard Record:** `A *.yourdomain.com` -> `YOUR_SERVER_IP`
+1.  **Domain Name:** You need a registered domain name (e.g., `contentceh.ru`).
+2.  **DNS Configuration:** Before running the installation script, you **must** configure DNS A-record for your domain, pointing to the public IP address of the server where you'll install this system. Replace `contentceh.ru` with your actual domain:
+    - **Wildcard Record:** `A *.contentceh.ru` -> `YOUR_SERVER_IP`
 3.  **VPS (Virtual Private Server):** A dedicated VPS with a public IP address is required. Home servers, shared hosting, or localhost setups are not supported.
     - **Operating System:** Ubuntu 24.04 LTS, 64-bit
     - For a minimal setup with **n8n, Monitoring, Databasus and Portainer**: **4 GB Memory / 2 CPU Cores / 40 GB Disk Space**
@@ -162,7 +162,7 @@ This single command automates the entire setup process, including:
 
 During the installation, the script will prompt you for:
 
-1.  Your **primary domain name** (Required, e.g., `yourdomain.com`). This is the domain for which you've configured the wildcard DNS record.
+1.  Your **primary domain name** (Required, e.g., `contentceh.ru`). This is the domain for which you've configured the wildcard DNS record.
 2.  Your **email address** (Required, used for service logins like Flowise, Supabase dashboard, Grafana, and for SSL certificate registration with Let's Encrypt).
 3.  An optional **OpenAI API key** (Not required. If provided, it can be used by Supabase AI features and Crawl4ai. Press Enter to skip).
 4.  Whether you want to **import ~300 ready-made n8n community workflows** (y/n, Optional. This can take 20-30 minutes, depending on your server and network speed).
@@ -176,33 +176,33 @@ Upon successful completion, the script will display a summary report. This repor
 After successful installation, your services are up and running! Here's how to get started:
 
 1.  **Access Your Services:**
-    The installation script provided a summary report with all access URLs and credentials. Please refer to that report. The main services will be available at the following addresses (replace `yourdomain.com` with your actual domain):
+    The installation script provided a summary report with all access URLs and credentials. Please refer to that report. The main services will be available at the following addresses (replace `contentceh.ru` with your actual domain):
 
-    - **n8n:** `n8n.yourdomain.com` (Log in with the email address you provided during installation and the initial password from the summary report. You may be prompted to change this password on first login.)
-    - **ComfyUI:** `comfyui.yourdomain.com` (Node-based Stable Diffusion UI)
-    - **Databasus:** `databasus.yourdomain.com`
-    - **Dify:** `dify.yourdomain.com` (AI application development platform with comprehensive LLMOps capabilities)
-    - **Docling:** `docling.yourdomain.com` (Universal document converter with REST API; web UI available at `/ui`)
-    - **Flowise:** `flowise.yourdomain.com` (Log in with the email address you provided during installation and the initial password from the summary report.)
-    - **Grafana:** `grafana.yourdomain.com`
-    - **Langfuse:** `langfuse.yourdomain.com`
-    - **Letta:** `letta.yourdomain.com`
-    - **LibreTranslate:** `translate.yourdomain.com`
-    - **LightRAG:** `lightrag.yourdomain.com`
-    - **Neo4j:** `neo4j.yourdomain.com`
-    - **NocoDB:** `nocodb.yourdomain.com`
-    - **Open WebUI:** `webui.yourdomain.com`
-    - **PaddleOCR:** `paddleocr.yourdomain.com`
-    - **Portainer:** `portainer.yourdomain.com` (Protected by Caddy basic auth; on first login, complete Portainer admin setup)
-    - **Postiz:** `postiz.yourdomain.com`
-    - **Prometheus:** `prometheus.yourdomain.com` (Typically used as a data source for Grafana)
-    - **Qdrant:** `qdrant.yourdomain.com`
-    - **RAGApp:** `ragapp.yourdomain.com`
-    - **RAGFlow:** `ragflow.yourdomain.com`
-    - **SearXNG:** `searxng.yourdomain.com`
-    - **Supabase (Dashboard):** `supabase.yourdomain.com`
-    - **WAHA:** `waha.yourdomain.com` (WhatsApp HTTP API; engines: WEBJS, NOWEB, GOWS)
-    - **Weaviate:** `weaviate.yourdomain.com`
+    - **n8n:** `n8n.contentceh.ru` (Log in with the email address you provided during installation and the initial password from the summary report. You may be prompted to change this password on first login.)
+    - **ComfyUI:** `comfyui.contentceh.ru` (Node-based Stable Diffusion UI)
+    - **Databasus:** `databasus.contentceh.ru`
+    - **Dify:** `dify.contentceh.ru` (AI application development platform with comprehensive LLMOps capabilities)
+    - **Docling:** `docling.contentceh.ru` (Universal document converter with REST API; web UI available at `/ui`)
+    - **Flowise:** `flowise.contentceh.ru` (Log in with the email address you provided during installation and the initial password from the summary report.)
+    - **Grafana:** `grafana.contentceh.ru`
+    - **Langfuse:** `langfuse.contentceh.ru`
+    - **Letta:** `letta.contentceh.ru`
+    - **LibreTranslate:** `translate.contentceh.ru`
+    - **LightRAG:** `lightrag.contentceh.ru`
+    - **Neo4j:** `neo4j.contentceh.ru`
+    - **NocoDB:** `nocodb.contentceh.ru`
+    - **Open WebUI:** `webui.contentceh.ru`
+    - **PaddleOCR:** `paddleocr.contentceh.ru`
+    - **Portainer:** `portainer.contentceh.ru` (Protected by Caddy basic auth; on first login, complete Portainer admin setup)
+    - **Postiz:** `postiz.contentceh.ru`
+    - **Prometheus:** `prometheus.contentceh.ru` (Typically used as a data source for Grafana)
+    - **Qdrant:** `qdrant.contentceh.ru`
+    - **RAGApp:** `ragapp.contentceh.ru`
+    - **RAGFlow:** `ragflow.contentceh.ru`
+    - **SearXNG:** `searxng.contentceh.ru`
+    - **Supabase (Dashboard):** `supabase.contentceh.ru`
+    - **WAHA:** `waha.contentceh.ru` (WhatsApp HTTP API; engines: WEBJS, NOWEB, GOWS)
+    - **Weaviate:** `weaviate.contentceh.ru`
 
 ### Optional Internal Utility: Python Runner
 
@@ -219,13 +219,13 @@ After successful installation, your services are up and running! Here's how to g
 
 3.  **Utilize Integrated AI Tools:**
 
-    - **Connect n8n with Vector Stores:** Use n8n to connect to Qdrant (accessible via its own endpoint if needed, typically `qdrant.yourdomain.com`), Supabase, or Weaviate (`weaviate.yourdomain.com`) to store and retrieve information for your AI tasks like Retrieval Augmented Generation (RAG).
-    - **Build with Flowise:** Access Flowise at `flowise.yourdomain.com` to create AI agents and applications. You can trigger Flowise agents from n8n or vice-versa.
-    - **Interact with Open WebUI:** Use Open WebUI at `webui.yourdomain.com` as a chat interface for your local AI models or n8n agents (e.g., using the n8n_pipe integration if configured).
+    - **Connect n8n with Vector Stores:** Use n8n to connect to Qdrant (accessible via its own endpoint if needed, typically `qdrant.contentceh.ru`), Supabase, or Weaviate (`weaviate.contentceh.ru`) to store and retrieve information for your AI tasks like Retrieval Augmented Generation (RAG).
+    - **Build with Flowise:** Access Flowise at `flowise.contentceh.ru` to create AI agents and applications. You can trigger Flowise agents from n8n or vice-versa.
+    - **Interact with Open WebUI:** Use Open WebUI at `webui.contentceh.ru` as a chat interface for your local AI models or n8n agents (e.g., using the n8n_pipe integration if configured).
     - **Configure LLMs:** If you wish to use large language models (LLMs) from providers like OpenAI, Anthropic, or locally via Ollama (if installed), you can easily configure credentials and connections within n8n nodes or in services like Flowise and Open WebUI.
 
 4.  **Check Monitoring (Optional):**
-    - Visit Grafana (`grafana.yourdomain.com`) to see dashboards monitoring your system's performance (data sourced from Prometheus).
+    - Visit Grafana (`grafana.contentceh.ru`) to see dashboards monitoring your system's performance (data sourced from Prometheus).
 	
 
 ## Secure Access with Cloudflare Tunnel (Optional)
