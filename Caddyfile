@@ -44,7 +44,12 @@ import /etc/caddy/addons/tls-snippet.conf
 # RAGFlow
 {$RAGFLOW_HOSTNAME} {
     import service_tls
-    reverse_proxy ragflow:80
+    reverse_proxy ragflow:80 {
+        transport http {
+            read_timeout 3600s
+            write_timeout 3600s
+        }
+    }
 }
 
 # Langfuse
