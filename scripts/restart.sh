@@ -40,6 +40,11 @@ log_info "Using compose files: ${COMPOSE_FILES[*]}"
 # This ensures clean shutdown of everything before restart
 docker compose -p "$PROJECT_NAME" "${COMPOSE_FILES[@]}" down
 
+# Clean up unused Docker images and build cache to free disk space
+log_info "Cleaning up unused Docker images..."
+docker image prune -f > /dev/null 2>&1 || true
+docker builder prune -f > /dev/null 2>&1 || true
+
 # Start services in correct order (matching start_services.py behavior)
 # NOTE: External stacks (Supabase, Dify) must be started SEPARATELY because their
 # compose files use relative paths for volumes/configs. When combined with main
