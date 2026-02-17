@@ -54,33 +54,33 @@ This setup provides a comprehensive suite of cutting-edge services, all pre-conf
 
 ✅ **[Caddy](https://caddyserver.com/), [Postgres](https://www.postgresql.org/), and [Redis](https://redis.io/)** - Core services for web proxy, database, and caching, which are always included.
 
-The installer also makes the following powerful open-source tools **available for you to select and deploy** via an interactive wizard during setup:
+The installer also makes the following powerful open-source tools **available for you to select and deploy** via an interactive wizard during setup (✅ = currently enabled, ⬜ = available but not enabled):
 
 ✅ [**n8n**](https://n8n.io/) - A low-code platform with over 400 integrations and advanced AI components to automate workflows.
 
-✅ [**ComfyUI**](https://github.com/comfyanonymous/ComfyUI) - A powerful, node-based UI for Stable Diffusion workflows. Build and run image-generation pipelines visually, with support for custom nodes and extensions.
+⬜ [**ComfyUI**](https://github.com/comfyanonymous/ComfyUI) - A powerful, node-based UI for Stable Diffusion workflows. Build and run image-generation pipelines visually, with support for custom nodes and extensions.
 
 ✅ [**Crawl4ai**](https://github.com/unclecode/crawl4ai) - A flexible web crawler designed for AI, enabling you to extract data from websites for your projects.
 
-✅ [**Docling**](https://github.com/docling-project/docling-serve) - Universal document converter that transforms PDF, DOCX, PPTX, XLSX, HTML, and images into clean Markdown or JSON. Features advanced PDF parsing, OCR support, and a REST API with optional web UI. Perfect for document processing in n8n workflows.
+⬜ [**Docling**](https://github.com/docling-project/docling-serve) - Universal document converter that transforms PDF, DOCX, PPTX, XLSX, HTML, and images into clean Markdown or JSON. Features advanced PDF parsing, OCR support, and a REST API with optional web UI. Perfect for document processing in n8n workflows.
 
-✅ [**Dify**](https://dify.ai/) - An open-source AI application development platform that provides comprehensive LLMOps capabilities, including workflow management, prompt engineering, RAG pipelines, and AI agent orchestration. Perfect for building production-ready AI applications.
+⬜ [**Dify**](https://dify.ai/) - An open-source AI application development platform that provides comprehensive LLMOps capabilities, including workflow management, prompt engineering, RAG pipelines, and AI agent orchestration. Perfect for building production-ready AI applications.
 
-✅ [**Flowise**](https://flowiseai.com/) - A no-code/low-code AI agent builder that complements n8n perfectly, allowing you to create sophisticated AI applications with ease.
+⬜ [**Flowise**](https://flowiseai.com/) - A no-code/low-code AI agent builder that complements n8n perfectly, allowing you to create sophisticated AI applications with ease.
 
-✅ [**Gost**](https://github.com/go-gost/gost) - Versatile HTTP/HTTPS proxy for routing AI service outbound traffic through a central proxy point
+⬜ [**Gost**](https://github.com/go-gost/gost) - Versatile HTTP/HTTPS proxy for routing AI service outbound traffic through a central proxy point
 
-✅ [**Gotenberg**](https://gotenberg.dev/) - A stateless API for converting HTML, Markdown, Word, Excel, and other documents to PDF, PNG, or JPEG. Available only within the Docker network for internal use by n8n workflows and other services.
+⬜ [**Gotenberg**](https://gotenberg.dev/) - A stateless API for converting HTML, Markdown, Word, Excel, and other documents to PDF, PNG, or JPEG. Available only within the Docker network for internal use by n8n workflows and other services.
 
 ✅ [**Grafana**](https://grafana.com/) - An open-source platform for visualizing monitoring data, helping you understand system performance at a glance.
 
 ✅ [**Langfuse**](https://langfuse.com/) - An open-source platform to help you observe and understand how your AI agents are performing, making it easier to debug and improve them.
 
-✅ [**Letta**](https://docs.letta.com/) - An open-source agent server and SDK that can be connected to various LLM API backends (OpenAI, Anthropic, Ollama, etc.), enabling you to build and manage AI agents.
+⬜ [**Letta**](https://docs.letta.com/) - An open-source agent server and SDK that can be connected to various LLM API backends (OpenAI, Anthropic, Ollama, etc.), enabling you to build and manage AI agents.
 
-✅ [**LightRAG**](https://github.com/HKUDS/LightRAG) - A simple and fast graph-based Retrieval-Augmented Generation system with automatic knowledge graph extraction, dual-level retrieval mechanisms, and incremental updates. Supports multiple storage backends (PostgreSQL, Neo4j, JSON) and embedding models.
+⬜ [**LightRAG**](https://github.com/HKUDS/LightRAG) - A simple and fast graph-based Retrieval-Augmented Generation system with automatic knowledge graph extraction, dual-level retrieval mechanisms, and incremental updates. Supports multiple storage backends (PostgreSQL, Neo4j, JSON) and embedding models.
 
-✅ [**LibreTranslate**](https://docs.libretranslate.com/) - Self-hosted translation API (50+ languages).
+⬜ [**LibreTranslate**](https://docs.libretranslate.com/) - Self-hosted translation API (50+ languages).
 
 ✅ [**Neo4j**](https://neo4j.com/) - A graph database management system that allows you to model, store, and query data as a network of nodes and relationships.
 
@@ -90,7 +90,7 @@ The installer also makes the following powerful open-source tools **available fo
 
 ✅ [**Open WebUI**](https://openwebui.com/) - A user-friendly, ChatGPT-like interface to interact privately with your AI models and n8n agents.
 
-✅ [**PaddleOCR**](https://www.paddleocr.ai/latest/en/index.html) - A CPU-ready OCR API powered by PaddleX Basic Serving. 
+⬜ [**PaddleOCR**](https://www.paddleocr.ai/latest/en/index.html) - A CPU-ready OCR API powered by PaddleX Basic Serving. 
 
 ✅ [**Portainer**](https://www.portainer.io/) - A lightweight, secure web UI to manage your Docker environment (containers, images, volumes, networks) with ease.
 
@@ -102,7 +102,7 @@ The installer also makes the following powerful open-source tools **available fo
 
 ✅ [**Qdrant**](https://qdrant.tech/) - A high-performance open-source vector store, specialized for AI. While Supabase also offers vector capabilities, Qdrant is included for its speed, making it ideal for demanding AI tasks.
 
-✅ [**RAGApp**](https://github.com/ragapp/ragapp) - Open-source application to build Retrieval-Augmented Generation (RAG) assistants over your data. Provides a web UI for chat and an HTTP API for integration with your workflows.
+⬜ [**RAGApp**](https://github.com/ragapp/ragapp) - Open-source application to build Retrieval-Augmented Generation (RAG) assistants over your data. Provides a web UI for chat and an HTTP API for integration with your workflows.
 
 ✅ [**RAGFlow**](https://ragflow.io/) - An open-source RAG engine based on deep document understanding with Elasticsearch backend, providing truthful question-answering capabilities with well-founded citations from complex formatted data.
 
@@ -110,9 +110,11 @@ The installer also makes the following powerful open-source tools **available fo
 
 ✅ [**Supabase**](https://supabase.com/) - An open-source alternative to Firebase, providing database storage, user authentication, and more. It's a popular choice for AI applications.
 
-✅ [**WAHA**](https://waha.devlike.pro/) - WhatsApp HTTP API (REST API) that you can configure in a click! 3 engines: WEBJS (browser based), NOWEB (websocket nodejs), GOWS (websocket go).
+⬜ [**WAHA**](https://waha.devlike.pro/) - WhatsApp HTTP API (REST API) that you can configure in a click! 3 engines: WEBJS (browser based), NOWEB (websocket nodejs), GOWS (websocket go).
 
-✅ [**Weaviate**](https://weaviate.io/) - An open-source AI-native vector database with a focus on scalability and ease of use. It can be used for RAG, hybrid search, and more.
+⬜ [**Weaviate**](https://weaviate.io/) - An open-source AI-native vector database with a focus on scalability and ease of use. It can be used for RAG, hybrid search, and more.
+
+✅ [**Xinference**](https://inference.readthedocs.io/) - An open-source platform for serving LLMs, embedding models, speech, and image models. Supports a wide range of models (LLaMA, ChatGLM, Qwen, etc.) with an OpenAI-compatible API and a built-in web UI for model management.
 
 ## Included Community Workflows
 
