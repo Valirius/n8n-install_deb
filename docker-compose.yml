@@ -1296,6 +1296,7 @@ services:
     container_name: xinference
     profiles: ["xinference"]
     restart: unless-stopped
+    command: ["xinference-local", "--host", "0.0.0.0", "--port", "9997"]
     environment:
       <<: *proxy-env
     volumes:
