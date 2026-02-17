@@ -212,6 +212,12 @@ http://{$WELCOME_HOSTNAME} {
     try_files {path} /index.html
 }
 
+# Xinference
+{$XINFERENCE_HOSTNAME} {
+    import service_tls
+    reverse_proxy xinference:9997
+}
+
 # Import custom site addons
 import /etc/caddy/addons/site-*.conf
 

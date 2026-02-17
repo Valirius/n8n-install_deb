@@ -28,6 +28,7 @@ volumes:
   postiz-uploads:
   prometheus_data:
   qdrant_storage:
+  xinference_data:
   ragflow_data:
   ragflow_elasticsearch_data:
   ragflow_minio_data:
@@ -365,6 +366,7 @@ services:
       WEAVIATE_HOSTNAME: ${WEAVIATE_HOSTNAME}
       WEBUI_HOSTNAME: ${WEBUI_HOSTNAME}
       WELCOME_HOSTNAME: ${WELCOME_HOSTNAME}
+      XINFERENCE_HOSTNAME: ${XINFERENCE_HOSTNAME}
       WELCOME_PASSWORD_HASH: ${WELCOME_PASSWORD_HASH}
       WELCOME_USERNAME: ${WELCOME_USERNAME}
     cap_drop:
@@ -1288,3 +1290,25 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+
+  xinference:
+    image: xprobe/xinference:latest
+    container_name: xinference
+    profiles: ["xinference"]
+    restart: unless-stopped
+    environment:
+      <<: *proxy-env
+    volumes:
+      - xinference_data:/root/.xinference
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "http_proxy= https_proxy= HTTP_PROXY= HTTPS_PROXY= wget -qO- http://localhost:9997/v1/models > /dev/null 2>&1 || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s

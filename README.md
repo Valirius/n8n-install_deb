@@ -203,6 +203,7 @@ After successful installation, your services are up and running! Here's how to g
     - **Supabase (Dashboard):** `supabase.contentceh.ru`
     - **WAHA:** `waha.contentceh.ru` (WhatsApp HTTP API; engines: WEBJS, NOWEB, GOWS)
     - **Weaviate:** `weaviate.contentceh.ru`
+    - **Xinference:** `xinference.contentceh.ru`
 
 ### Optional Internal Utility: Python Runner
 
